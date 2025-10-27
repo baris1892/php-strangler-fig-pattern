@@ -1,0 +1,25 @@
+http:
+  routers:
+
+    symfony_me:
+      rule: "PathPrefix(`/me`)"
+      service: symfony_service
+
+    symfony_change:
+      rule: "PathPrefix(`/update-session`)"
+      service: symfony_service
+
+    legacy_fallback:
+      rule: "PathPrefix(`/`)"
+      service: legacy_service
+
+  services:
+    legacy_service:
+      loadBalancer:
+        servers:
+          - url: "http://legacy:80"
+
+    symfony_service:
+      loadBalancer:
+        servers:
+          - url: "http://symfony:80"

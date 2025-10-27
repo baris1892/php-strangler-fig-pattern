@@ -1,0 +1,54 @@
+services:
+  traefik:
+    image: traefik:v3.0
+    container_name: traefik
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.file.directory=/etc/traefik/dynamic"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8081:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik:/etc/traefik/dynamic
+    networks:
+      - strangler_net
+
+  redis:
+    image: redis:7
+    container_name: redis
+    networks:
+      - strangler_net
+
+  legacy:
+    build: ./legacy
+    container_name: legacy_app
+    volumes:
+      - ./legacy/public:/var/www/html
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    expose:
+      - "80"
+    labels:
+      - "traefik.enable=true"
+    networks:
+      - strangler_net
+
+  symfony:
+    build: ./symfony
+    container_name: symfony_app
+    volumes:
+      - ./symfony:/app
+    expose:
+      - "80"
+    labels:
+      - "traefik.enable=true"
+    networks:
+      - strangler_net
+
+networks:
+  strangler_net:
+    driver: bridge
