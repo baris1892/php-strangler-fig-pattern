@@ -10,18 +10,18 @@ base domain.
 
 ### Components
 
-- Legacy App (PHP 8.2 + Apache)
+- Legacy App (PHP 8.2 + Apache)  
   Existing monolithic application serving all routes by default.
   Uses native PHP sessions stored in Redis.
 
-- Symfony App (PHP 8.3 + Apache)
+- Symfony App (PHP 8.3 + Apache)  
   New microservice providing modern endpoints (e.g. /me, /change).
   Reads and writes the same session data via $_SESSION, fully compatible with the legacy Redis session store.
 
-- Redis 7
+- Redis 7  
   Centralized session store (session.save_handler = redis, prefix=sess_) for both apps.
 
-- Traefik 3.0
+- Traefik 3.0  
   Acts as a smart reverse proxy.
   Routes traffic based on path prefixes:
 
