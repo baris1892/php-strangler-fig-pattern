@@ -1,7 +1,6 @@
 # 🪴 Strangler Fig Migration - Legacy PHP → Symfony (via Traefik Proxy)
-
-> ⚠️ **Portfolio / Demo** — This repository is a portfolio demo demonstrating the Strangler Fig (Proxy) migration pattern.  
-> It is intentionally simplified for demonstration purposes (legacy integration via native PHP sessions + Redis).
+ 
+> ⚠️ **Portfolio / Demo** — This repository is part of a personal portfolio
 
 This project demonstrates a Strangler Fig migration pattern applied to a legacy PHP application, where a modern Symfony
 7 service gradually replaces legacy endpoints behind a unified reverse proxy (Traefik 3).
